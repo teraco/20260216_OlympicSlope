@@ -9,20 +9,23 @@
   <body>
     <header class="site-header">
       <h1>2026 女子スロープスタイル 予選 セクション別スコア</h1>
-      <p class="sub">データ: 2026SB6201ANQ_rankings_wide_horizontal.csv</p>
+      <p class="sub">データ: 埋め込みCSV</p>
     </header>
 
     <section class="controls">
-      <div class="highlight-controls">
-        <label for="player-input">選手をハイライト:</label>
-        <input id="player-input" list="player-list" placeholder="選手名を入力 (最大3人)" />
-        <datalist id="player-list"></datalist>
-        <input type="color" id="color-input" value="#fff4a3" title="ハイライト色" />
-        <button id="add-highlight">追加</button>
-        <button id="clear-highlights" class="ghost">全てクリア</button>
+      <div class="picker-row">
+        <label for="player-select-1">選手を選択 1:</label>
+        <select id="player-select-1"></select>
+        <label for="player-select-2">選手を選択 2:</label>
+        <select id="player-select-2"></select>
       </div>
-      <div id="selected-highlights" class="selected-highlights" aria-live="polite"></div>
+      <div id="csv-fallback" hidden>
+        <p class="note">CSVの自動読み込みに失敗しました。ローカルで開いている場合は、下のボタンからCSVファイルを選択してください。</p>
+        <input type="file" id="csv-file" accept=".csv,text/csv" />
+      </div>
     </section>
+
+    <section id="chart-area" class="chart-area" aria-label="セクション別トリック グラフ"></section>
 
     <main>
       <div class="table-wrap">
@@ -35,10 +38,44 @@
     </main>
 
     <footer class="site-footer">
-      <small>要件: セクション毎の得点ソート、選手ハイライト(最大3人)</small>
+      <small>要件: セクション毎の得点ソート</small>
     </footer>
+
+    <!-- 埋め込みCSV（外部ファイル不要） -->
+    <script>
+      window.__CSV_DATA__ = `Rank,S1 Trick,S1 Score,S1 Name,S2 Trick,S2 Score,S2 Name,S3 Trick,S3 Score,S3 Name,S4 Trick,S4 Score,S4 Name,S5 Trick,S5 Score,S5 Name,S6 Trick,S6 Score,S6 Name,Sections(60%),Sections Name,Composition(40%),Composition Name,Score(100%),Score Name
+1,f-Bsl-Pr-2,8.75,PERLMUTTER Jessica,x-f-Lsl-to-fwd+f-Bl-2,8.8,BURRI Ariane,x-Bsl-UF-I,8.7,SADOWSKI SYNNOTT Zoi,f-10-Mu,9.85,SADOWSKI SYNNOTT Zoi,b-12-Me,9.7,BROOKES Mia,b-10-Mu,9.2,MURASE Kokomo,51.55,SADOWSKI SYNNOTT Zoi,36.53,SADOWSKI SYNNOTT Zoi,88.08,SADOWSKI SYNNOTT Zoi
+2,x-f-Bl-2,8.65,BURRI Ariane,f-Bsl-+f-Ns-Bl-to-Tsl-2,8.7,BROOKES Mia,Bsl-UF-I,8.35,GEORGALLI Lucia,f-dC-9-Tdr,9.05,MURASE Kokomo,f-dC-10-I,9.15,YU Seungeun,Cab-9-Mu,8.95,PELCHAT Juliette,49.6,MURASE Kokomo,35.33,MURASE Kokomo,84.93,MURASE Kokomo
+3,Cab-2-on-2,8.55,BROOKES Mia,x-Bsl-to-fwd+f-Lsl-2,8.55,YU Seungeun,f-Lsl-UF-I,8.35,FUKADA Mari,Cab-d-UF-9-I,8.95,MORGAN Annika,Cab-9-Ddr,8.75,MURASE Kokomo,x-b-9-Mu,8.9,SADOWSKI SYNNOTT Zoi,44.4,YU Seungeun,32.4,YU Seungeun,76.8,YU Seungeun
+4,x-f-Bsl-2,8.35,FUKADA Mari,Cab-1-55+f-Bsl-2,8.5,HICKMAN Ally,f-Bsl-2-I,8.3,MURASE Kokomo,f-d-UF-9-I,8.75,IWABUCHI Reira,f-10-Me,8.55,ZHANG Xiaonan,f-9-St,8.15,PEPERKAMP Melissa,44.1,FUKADA Mari,30.66,HICKMAN Ally,73.65,IWABUCHI Reira
+5,x-f-Bsl-2,8.35,BLOUIN Laurie,Bsl+f-Lsl-Pr-2,8.4,SADOWSKI SYNNOTT Zoi,Bsl-Pr-2,7.25,MORGAN Annika,Cab-9-Me,8.65,DHAWORNVEJ Lily,Cab-9-Tg,8.25,IWABUCHI Reira,b-9-Tg,8.05,KARRER Hanna,43.9,GASSER Anna,30.4,IWABUCHI Reira,73.5,GASSER Anna
+6,x-b-Lsl,8.25,GASSER Anna,x-Bsl-to-fwd+f-Lsl-2,8.15,MURASE Kokomo,f-Lsl-2-I,7.15,IWABUCHI Reira,Cab-d-UF-9-I,8.6,BLOUIN Laurie,x-b-9-St,8.2,PEPERKAMP Melissa,b-7-St,7.9,DHAWORNVEJ Lily,43.4,MORGAN Annika,29.6,GASSER Anna,71.41,HICKMAN Ally
+7,f-Lsl,8.15,MORGAN Annika,x-Bl-to-fwd+-Bsl-Pr-2,7.95,GASSER Anna,f-Lsl-UF-I,5.95,PERLMUTTER Jessica,Cab-9-Ddr,8.4,GASSER Anna,b-12-Me,8.2,SADOWSKI SYNNOTT Zoi,oT-7-Me,7.85,FUKADA Mari,43.35,PEPERKAMP Melissa,28.4,BLOUIN Laurie,71.03,FUKADA Mari
+8,f-Lsl,8.05,PELCHAT Juliette,f-Bsl+55-Gap-Bsl-to-Fa,7.9,REMANS Sky,f-Lsl-Tl-Tap-to-Fa,5.75,HICKMAN Ally,Cab-7-Mu-RB,8.35,PEPERKAMP Melissa,f-7-I,7.95,DHAWORNVEJ Lily,f-7-Me,7.55,MORGAN Annika,43.25,IWABUCHI Reira,28.4,DHAWORNVEJ Lily,69.53,MORGAN Annika
+9,f-Bsl-2,8.0,CORNELL PATO Nora,x-Bsl-to-fwd+-Bsl-2,7.85,SUZUKI Momo,Cab-1-55-b1,5.5,REMANS Sky,x-b-9-Mu,8.1,YU Seungeun,b-7-Me,7.6,MORGAN Annika,f-7-Tg,7.3,BLOUIN Laurie,42.8,BROOKES Mia,28.0,PELCHAT Juliette,69.3,BLOUIN Laurie
+10,Cab-2-on,7.55,YU Seungeun,f-Bsl+Bsl-2,7.0,PEPERKAMP Melissa,f-1-55-x-b-3,5.45,van VREDEN Romy,x-b-9-Mu,8.1,FUKADA Mari,b-7-Mu,7.55,GASSER Anna,f-7-Tg,7.25,TAKA Eveliina,40.9,BLOUIN Laurie,27.73,PERLMUTTER Jessica,68.9,DHAWORNVEJ Lily
+11,Cab-2-on-2,7.5,SADOWSKI SYNNOTT Zoi,b-Lsl+f-Lsl,6.75,CORNELL PATO Nora,55-b-3,5.35,PELCHAT Juliette,x-b-9-Mu,7.85,van VREDEN Romy,b-7-Mu,7.45,FUKADA Mari,b-7-Mu,7.05,SUZUKI Momo,40.85,PERLMUTTER Jessica,26.93,FUKADA Mari,68.58,PERLMUTTER Jessica
+12,f-2-on,7.35,DHAWORNVEJ Lily,Cab-1-55+Bsl-to-f-Bsl,6.4,PERLMUTTER Jessica,f-Lsl-Pr-2,5.25,PEPERKAMP Melissa,f-7-Mu,7.7,PELCHAT Juliette,Cab-9-Mu,7.4,BURRI Ariane,b-7-Mu,7.0,IWABUCHI Reira,40.75,HICKMAN Ally,26.13,MORGAN Annika,68.25,PELCHAT Juliette
+13,Cab-2-on-2,7.35,IWABUCHI Reira,Np+f-Lsl-to-Fa,6.35,TAKA Eveliina,x-f-Lsl-2,5.25,GASSER Anna,f-7-I,7.2,BROOKES Mia,f-7-Mu,7.1,STALKER Meila,b-7-Mu,6.85,YU Seungeun,40.5,DHAWORNVEJ Lily,24.4,PEPERKAMP Melissa,67.75,PEPERKAMP Melissa
+14,x-Bl-2,6.9,HICKMAN Ally,Cab-1-55+f-Bsl,5.9,BLOUIN Laurie,55-f-3,5.1,COADY Tess,x-b-9-Mu,7.15,SUZUKI Momo,b-7-Me,7.1,TAKA Eveliina,f-7-Me,6.7,GEORGALLI Lucia,40.35,BURRI Ariane,21.73,TAKA Eveliina,58.75,BURRI Ariane
+15,b-Lsl,6.85,TAKA Eveliina,f-Bsl+f-Lsl,5.05,DHAWORNVEJ Lily,Bsl-2,4.85,BURRI Ariane,b-7-Me,7.1,COADY Tess,f-7-Me,7.1,HICKMAN Ally,b-7-Me,6.5,PERLMUTTER Jessica,40.25,PELCHAT Juliette,18.53,KARRER Hanna,57.98,TAKA Eveliina
+16,Bsl-2,6.8,REMANS Sky,55+f-Lsl,5.0,KARRER Hanna,55-b-3,4.65,BROOKES Mia,Cab-5-Mu,6.85,POLUZZI Marilu,f-7-Tg,7.05,KARRER Hanna,f-5-I,6.5,GASSER Anna,37.3,CORNELL PATO Nora,18.4,BURRI Ariane,56.53,BROOKES Mia
+17,b-Lsl,6.65,ZAVESKA Laura,f-Lsl+f-Bsl-2,4.75,IWABUCHI Reira,55-f-3,4.45,POPPE Evy,x-b-5-Mu,6.75,HICKMAN Ally,f-7-I,7.0,ZAVESKA Laura,Cab-5-Mu,6.25,HILL Maisie,36.7,SUZUKI Momo,16.8,SUZUKI Momo,53.88,KARRER Hanna
+18,Cab-2-on-2,6.4,PEPERKAMP Melissa,Cab-1-55+f-1-55-x-b-1,4.6,COADY Tess,f-Bl-4,4.25,SUZUKI Momo,Cab-d-UF-9-I,6.75,PERLMUTTER Jessica,f-7-Mu,6.7,NORMAN Hahna,b-7-Me,6.1,POLUZZI Marilu,36.25,TAKA Eveliina,16.66,HILL Maisie,53.5,SUZUKI Momo
+19,Gap-Bsl-2,6.4,STALKER Meila,Bsl+b-2-on-2,4.45,NORMAN Hahna,55-b-1-Me,4.2,YU Seungeun,f-7-Tg,6.75,HILL Maisie,b-7-Me,6.65,BLOUIN Laurie,b-5-I,6.0,ZAVESKA Laura,36.2,GEORGALLI Lucia,15.73,CORNELL PATO Nora,53.03,CORNELL PATO Nora
+20,x-Bl-2,6.25,COADY Tess,f-Lsl+f-1-55-x-b-1,4.15,ZAVESKA Laura,55-f-1,4.1,BLOUIN Laurie,x-b-5-I,6.65,STALKER Meila,b-7-Mu,6.65,GEORGALLI Lucia,b-5-I,5.75,HICKMAN Ally,35.35,KARRER Hanna,15.06,STALKER Meila,50.6,GEORGALLI Lucia
+21,Cab-1-55-to-Bsl-2,6.15,MURASE Kokomo,x-Bsl-to-fwd+-f-Bsl-2,4.0,FUKADA Mari,55-f-1-I,4.1,ZHANG Xiaonan,Cab-5-I,6.6,KARRER Hanna,f-7-Me,6.55,CORNELL PATO Nora,b-7,5.75,CORNELL PATO Nora,32.3,STALKER Meila,14.4,ZAVESKA Laura,48.66,HILL Maisie
+22,f-Bsl,5.5,KARRER Hanna,Ns-Tap+Bsl-2,3.9,MORGAN Annika,55-b-1-I,4.0,CORNELL PATO Nora,Cab-5-I,6.35,ZHANG Xiaonan,b-5-Me,6.55,HILL Maisie,fF-Ng,5.65,POPPE Evy,32.3,ZAVESKA Laura,14.4,GEORGALLI Lucia,47.36,STALKER Meila
+23,f-Bsl,5.15,POLUZZI Marilu,f-Lsl-to-Fa+x-Bsl-to-fwd,3.85,HILL Maisie,55-f-3,3.95,HILL Maisie,x-b-5-Mu,6.3,NORMAN Hahna,f-7-Me,6.55,SUZUKI Momo,b-3-Mu,5.05,STALKER Meila,32.0,HILL Maisie,13.73,BROOKES Mia,46.7,ZAVESKA Laura
+24,f-Bsl,4.75,NORMAN Hahna,55-f-1+x-Bl-to-fwd,3.75,PELCHAT Juliette,55-b-1,3.9,POLUZZI Marilu,Cab-5-Mu,6.25,CORNELL PATO Nora,f-7-Mu,6.5,PERLMUTTER Jessica,b-3,4.6,ZHANG Xiaonan,30.1,NORMAN Hahna,12.66,ZHANG Xiaonan,42.11,ZHANG Xiaonan
+25,Cab-2-on,4.65,GEORGALLI Lucia,x-Bsl-to-fwd+-f-Bsl,3.7,GEORGALLI Lucia,x-Bsl-2,3.85,NORMAN Hahna,x-b-5-St,6.15,GEORGALLI Lucia,b-5-I,6.45,PELCHAT Juliette,b-3-Mu,4.55,BURRI Ariane,29.45,ZHANG Xiaonan,12.66,van VREDEN Romy,41.7,NORMAN Hahna
+26,Gap-f-Lsl,4.65,HILL Maisie,55-f-1+-x-f-Bsl-to-fwd,3.5,STALKER Meila,55-b-1,3.6,STALKER Meila,f-5-I,6.1,BURRI Ariane,b-7,6.35,POPPE Evy,b-7-Mu,4.05,NORMAN Hahna,29.35,COADY Tess,11.86,POPPE Evy,39.91,van VREDEN Romy
+27,x-f-Bsl-2,3.85,SUZUKI Momo,x-Bsl-to-fwd+Bsl-2,3.4,van VREDEN Romy,55-b-1,3.6,DHAWORNVEJ Lily,Cab-5-Mu,6.1,TAKA Eveliina,f-9-Tg,6.3,COADY Tess,Cab-9-Mu-Tg,4.0,BROOKES Mia,27.45,POLUZZI Marilu,11.6,NORMAN Hahna,38.95,COADY Tess
+28,Bsl-Pr-2,3.55,van VREDEN Romy,55+55-to-Tp,2.85,POPPE Evy,55-b-1,3.15,KARRER Hanna,x-b-C-5-Mu,5.6,ZAVESKA Laura,b-7,3.5,van VREDEN Romy,f-7-Me,3.5,van VREDEN Romy,27.25,van VREDEN Romy,10.4,POLUZZI Marilu,37.85,POLUZZI Marilu
+29,x-Bsl-to-fwd,3.4,POPPE Evy,f-Lsl-to-Fa+Cab-1-55,2.55,ZHANG Xiaonan,f-Bsl-to-Fa,2.9,ZAVESKA Laura,Mu,2.4,POPPE Evy,f-7,3.0,POLUZZI Marilu,Str-A,1.2,REMANS Sky,25.1,POPPE Evy,9.6,COADY Tess,36.96,POPPE Evy
+30,x-b-1-55,3.3,ZHANG Xiaonan,Np+Bsl,2.45,POLUZZI Marilu,x-55,2.6,TAKA Eveliina,Cab-9-Tg,1.0,REMANS Sky,xx,0.0,REMANS Sky,xx,0.0,COADY Tess,22.4,REMANS Sky,5.73,REMANS Sky,28.13,REMANS Sky`;
+    </script>
 
     <script src="script.js"></script>
   </body>
   </html>
-
