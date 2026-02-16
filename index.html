@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>2026 女子スロープスタイル 予選 セクション別スコア</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>2026 女子スロープスタイル 予選 セクション別スコア</h1>
+      <p class="sub">データ: 2026SB6201ANQ_rankings_wide_horizontal.csv</p>
+    </header>
+
+    <section class="controls">
+      <div class="highlight-controls">
+        <label for="player-input">選手をハイライト:</label>
+        <input id="player-input" list="player-list" placeholder="選手名を入力 (最大3人)" />
+        <datalist id="player-list"></datalist>
+        <input type="color" id="color-input" value="#fff4a3" title="ハイライト色" />
+        <button id="add-highlight">追加</button>
+        <button id="clear-highlights" class="ghost">全てクリア</button>
+      </div>
+      <div id="selected-highlights" class="selected-highlights" aria-live="polite"></div>
+    </section>
+
+    <main>
+      <div class="table-wrap">
+        <table id="score-table" aria-describedby="sort-note">
+          <thead id="table-head"></thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+      <p id="sort-note" class="note">ヘッダーをクリックして得点で並び替えできます。</p>
+    </main>
+
+    <footer class="site-footer">
+      <small>要件: セクション毎の得点ソート、選手ハイライト(最大3人)</small>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+  </html>
+
